@@ -6,6 +6,7 @@ const todoList = document.getElementById("todo-list");
 const todoStats = document.getElementById("todo-stats");
 const filters = document.getElementById("filters");
 const searchInput = document.getElementById("search-input");
+const clearCompletedButton = document.getElementById("clear-completed-btn");
 
 let todos = loadTodos();
 let currentFilter = "all";
@@ -47,6 +48,10 @@ filters.addEventListener("click", (event) => {
 searchInput.addEventListener("input", (event) => {
   searchKeyword = event.target.value.trim().toLowerCase();
   render();
+});
+
+clearCompletedButton.addEventListener("click", () => {
+  clearCompletedTodos();
 });
 
 todoList.addEventListener("click", (event) => {
@@ -98,6 +103,7 @@ function render() {
   }
 
   const completedCount = todos.filter((todo) => todo.completed).length;
+  clearCompletedButton.disabled = completedCount === 0;
   todoStats.textContent = `共 ${todos.length} 项，已完成 ${completedCount} 项`;
 }
 
@@ -150,6 +156,12 @@ function editTodo(id) {
 
 function deleteTodo(id) {
   todos = todos.filter((todo) => todo.id !== id);
+  saveTodos();
+  render();
+}
+
+function clearCompletedTodos() {
+  todos = todos.filter((todo) => !todo.completed);
   saveTodos();
   render();
 }
