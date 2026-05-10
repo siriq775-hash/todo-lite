@@ -1,0 +1,68 @@
+# Todo Lite
+
+一个使用原生 HTML、CSS 和 JavaScript 编写的待办事项 Web 应用。
+
+仓库地址：<https://github.com/siriq775-hash/todo-lite>
+
+## 功能
+
+- 新增待办事项
+- 标记完成和未完成
+- 编辑待办事项
+- 删除待办事项
+- 按全部 / 进行中 / 已完成筛选
+- 使用 `localStorage` 本地保存数据
+
+## 技术栈
+
+- HTML
+- CSS
+- JavaScript
+- `localStorage`
+
+## 项目结构
+
+```text
+.
+├── index.html
+├── style.css
+├── app.js
+├── .gitignore
+└── README.md
+```
+
+## 本地运行
+
+这个项目不依赖额外环境，直接打开 `index.html` 即可运行。
+
+也可以在项目目录启动一个本地静态服务器后访问。
+
+## 使用方法
+
+1. 在输入框中输入待办内容
+2. 点击“添加”创建待办
+3. 勾选复选框切换完成状态
+4. 点击“编辑”修改内容
+5. 点击“删除”移除待办
+6. 使用顶部筛选按钮查看不同状态的任务
+
+## 数据存储
+
+所有待办数据都会保存在浏览器的 `localStorage` 中。刷新页面后，数据仍会保留；更换浏览器或清除浏览器缓存后，数据不会同步保留。
+
+## 后续可以继续扩展
+
+- 搜索待办事项
+- 设置优先级
+- 添加截止日期
+- 支持暗色模式
+- 支持拖拽排序
+
+## Git 常用流程
+
+```bash
+git status
+git add .
+git commit -m "feat: update todo app"
+git push
+```
