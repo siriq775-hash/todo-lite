@@ -5,9 +5,11 @@ const todoInput = document.getElementById("todo-input");
 const todoList = document.getElementById("todo-list");
 const todoStats = document.getElementById("todo-stats");
 const filters = document.getElementById("filters");
+const searchInput = document.getElementById("search-input");
 
 let todos = loadTodos();
 let currentFilter = "all";
+let searchKeyword = "";
 
 render();
 
@@ -39,6 +41,11 @@ filters.addEventListener("click", (event) => {
     btn.classList.toggle("active", btn === button);
   });
 
+  render();
+});
+
+searchInput.addEventListener("input", (event) => {
+  searchKeyword = event.target.value.trim().toLowerCase();
   render();
 });
 
@@ -95,15 +102,23 @@ function render() {
 }
 
 function getFilteredTodos() {
+  let filteredTodos = todos;
+
   if (currentFilter === "active") {
-    return todos.filter((todo) => !todo.completed);
+    filteredTodos = filteredTodos.filter((todo) => !todo.completed);
   }
 
   if (currentFilter === "completed") {
-    return todos.filter((todo) => todo.completed);
+    filteredTodos = filteredTodos.filter((todo) => todo.completed);
   }
 
-  return todos;
+  if (searchKeyword) {
+    filteredTodos = filteredTodos.filter((todo) =>
+      todo.text.toLowerCase().includes(searchKeyword)
+    );
+  }
+
+  return filteredTodos;
 }
 
 function toggleTodo(id) {

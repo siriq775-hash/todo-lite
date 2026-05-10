@@ -71,6 +71,15 @@ body {
   margin-bottom: 20px;
 }
 
+.search-input {
+  flex: 1 1 220px;
+  min-width: 220px;
+  padding: 10px 12px;
+  border: 1px solid #d0d7e2;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
 .filters {
   display: flex;
   gap: 8px;
