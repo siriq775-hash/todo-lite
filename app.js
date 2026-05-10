@@ -13,6 +13,8 @@ let todos = loadTodos();
 let currentFilter = "all";
 let searchKeyword = "";
 
+dueDateInput.min = getTodayDateString();
+
 render();
 
 todoForm.addEventListener("submit", (event) => {
@@ -21,6 +23,11 @@ todoForm.addEventListener("submit", (event) => {
   const text = todoInput.value.trim();
   const dueDate = normalizeDueDate(dueDateInput.value);
   if (!text) return;
+
+  if (dueDate && dueDate < getTodayDateString()) {
+    window.alert("截止日期不能早于今天");
+    return;
+  }
 
   todos.unshift({
     id: Date.now(),
@@ -164,6 +171,11 @@ function editTodo(id) {
       window.alert("截止日期格式应为 YYYY-MM-DD");
       return;
     }
+
+    if (nextDueDate && nextDueDate < getTodayDateString()) {
+      window.alert("截止日期不能早于今天");
+      return;
+    }
   }
 
   todos = todos.map((todo) =>
@@ -207,6 +219,10 @@ function normalizeDueDate(value) {
   if (!trimmedValue) return "";
 
   return /^\d{4}-\d{2}-\d{2}$/.test(trimmedValue) ? trimmedValue : "";
+}
+
+function getTodayDateString() {
+  return new Date().toLocaleDateString("en-CA");
 }
 
 function escapeHtml(text) {
