@@ -3,6 +3,7 @@ const STORAGE_KEY = "todo-lite.todos";
 const todoForm = document.getElementById("todo-form");
 const todoInput = document.getElementById("todo-input");
 const dueDateInput = document.getElementById("due-date-input");
+const priorityInput = document.getElementById("priority-input");
 const todoList = document.getElementById("todo-list");
 const todoStats = document.getElementById("todo-stats");
 const filters = document.getElementById("filters");
@@ -22,6 +23,7 @@ todoForm.addEventListener("submit", (event) => {
 
   const text = todoInput.value.trim();
   const dueDate = normalizeDueDate(dueDateInput.value);
+  const priority = normalizePriority(priorityInput.value);
   if (!text) return;
 
   if (dueDate && dueDate < getTodayDateString()) {
@@ -33,7 +35,8 @@ todoForm.addEventListener("submit", (event) => {
     id: Date.now(),
     text,
     completed: false,
-    dueDate
+    dueDate,
+    priority
   });
 
   saveTodos();
@@ -103,6 +106,7 @@ function render() {
           <div class="todo-content">
             <span class="todo-text ${todo.completed ? "completed" : ""}">${escapeHtml(todo.text)}</span>
             ${todo.dueDate ? `<span class="todo-due-date">截止：${escapeHtml(todo.dueDate)}</span>` : ""}
+            <span class="priority-badge priority-${todo.priority}">${escapeHtml(getPriorityLabel(todo.priority))}</span>
           </div>
         </div>
         <div class="todo-actions">
@@ -178,8 +182,22 @@ function editTodo(id) {
     }
   }
 
+  const editedPriority = window.prompt(
+    "编辑优先级（high / medium / low）",
+    target.priority || "medium"
+  );
+  if (editedPriority === null) return;
+
+  const nextPriority = normalizePriority(editedPriority);
+  if (!editedPriority.trim() || editedPriority.trim() !== nextPriority) {
+    window.alert("优先级只能是 high、medium 或 low");
+    return;
+  }
+
   todos = todos.map((todo) =>
-    todo.id === id ? { ...todo, text: trimmedText, dueDate: nextDueDate } : todo
+    todo.id === id
+      ? { ...todo, text: trimmedText, dueDate: nextDueDate, priority: nextPriority }
+      : todo
   );
 
   saveTodos();
@@ -210,7 +228,8 @@ function loadTodos() {
     id: todo.id,
     text: todo.text,
     completed: todo.completed,
-    dueDate: normalizeDueDate(todo.dueDate)
+    dueDate: normalizeDueDate(todo.dueDate),
+    priority: normalizePriority(todo.priority)
   }));
 }
 
@@ -219,6 +238,11 @@ function normalizeDueDate(value) {
   if (!trimmedValue) return "";
 
   return /^\d{4}-\d{2}-\d{2}$/.test(trimmedValue) ? trimmedValue : "";
+}
+
+function normalizePriority(value) {
+  const trimmedValue = String(value || "").trim().toLowerCase();
+  return ["high", "medium", "low"].includes(trimmedValue) ? trimmedValue : "medium";
 }
 
 function getTodayDateString() {
@@ -235,7 +259,8 @@ function compareTodosByDueDate(a, b) {
   }
 
   if (!a.dueDate && !b.dueDate) {
-    return b.id - a.id;
+    const priorityDifference = comparePriority(a.priority, b.priority);
+    return priorityDifference || b.id - a.id;
   }
 
   if (!a.dueDate) return 1;
@@ -245,7 +270,23 @@ function compareTodosByDueDate(a, b) {
     return a.dueDate.localeCompare(b.dueDate);
   }
 
-  return b.id - a.id;
+  return comparePriority(a.priority, b.priority) || b.id - a.id;
+}
+
+function comparePriority(a, b) {
+  const priorityRank = {
+    high: 0,
+    medium: 1,
+    low: 2
+  };
+
+  return priorityRank[a] - priorityRank[b];
+}
+
+function getPriorityLabel(priority) {
+  if (priority === "high") return "高优先级";
+  if (priority === "low") return "低优先级";
+  return "中优先级";
 }
 
 function escapeHtml(text) {
