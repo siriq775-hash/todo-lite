@@ -139,6 +139,16 @@ body {
   margin-bottom: 12px;
 }
 
+.todo-item.overdue {
+  border-color: #f59e0b;
+  background: #fff7ed;
+}
+
+.todo-item.overdue .todo-due-date {
+  color: #c2410c;
+  font-weight: 600;
+}
+
 .todo-left {
   display: flex;
   align-items: flex-start;

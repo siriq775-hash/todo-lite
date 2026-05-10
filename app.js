@@ -94,7 +94,7 @@ function render() {
   } else {
     filteredTodos.forEach((todo) => {
       const li = document.createElement("li");
-      li.className = "todo-item";
+      li.className = `todo-item ${isOverdue(todo) ? "overdue" : ""}`.trim();
       li.dataset.id = String(todo.id);
 
       li.innerHTML = `
@@ -223,6 +223,10 @@ function normalizeDueDate(value) {
 
 function getTodayDateString() {
   return new Date().toLocaleDateString("en-CA");
+}
+
+function isOverdue(todo) {
+  return Boolean(todo.dueDate && !todo.completed && todo.dueDate < getTodayDateString());
 }
 
 function escapeHtml(text) {
