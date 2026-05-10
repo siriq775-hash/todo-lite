@@ -2,6 +2,7 @@ const STORAGE_KEY = "todo-lite.todos";
 
 const todoForm = document.getElementById("todo-form");
 const todoInput = document.getElementById("todo-input");
+const dueDateInput = document.getElementById("due-date-input");
 const todoList = document.getElementById("todo-list");
 const todoStats = document.getElementById("todo-stats");
 const filters = document.getElementById("filters");
@@ -18,12 +19,14 @@ todoForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
   const text = todoInput.value.trim();
+  const dueDate = normalizeDueDate(dueDateInput.value);
   if (!text) return;
 
   todos.unshift({
     id: Date.now(),
     text,
-    completed: false
+    completed: false,
+    dueDate
   });
 
   saveTodos();
@@ -90,7 +93,10 @@ function render() {
       li.innerHTML = `
         <div class="todo-left">
           <input class="toggle-checkbox" type="checkbox" ${todo.completed ? "checked" : ""} />
-          <span class="todo-text ${todo.completed ? "completed" : ""}">${escapeHtml(todo.text)}</span>
+          <div class="todo-content">
+            <span class="todo-text ${todo.completed ? "completed" : ""}">${escapeHtml(todo.text)}</span>
+            ${todo.dueDate ? `<span class="todo-due-date">截止：${escapeHtml(todo.dueDate)}</span>` : ""}
+          </div>
         </div>
         <div class="todo-actions">
           <button class="action-btn edit-btn" type="button">编辑</button>
@@ -146,8 +152,22 @@ function editTodo(id) {
   const trimmedText = newText.trim();
   if (!trimmedText) return;
 
+  const editedDueDate = window.prompt(
+    "编辑截止日期（YYYY-MM-DD，留空表示清除）",
+    target.dueDate || ""
+  );
+
+  let nextDueDate = target.dueDate || "";
+  if (editedDueDate !== null) {
+    nextDueDate = normalizeDueDate(editedDueDate);
+    if (editedDueDate.trim() && !nextDueDate) {
+      window.alert("截止日期格式应为 YYYY-MM-DD");
+      return;
+    }
+  }
+
   todos = todos.map((todo) =>
-    todo.id === id ? { ...todo, text: trimmedText } : todo
+    todo.id === id ? { ...todo, text: trimmedText, dueDate: nextDueDate } : todo
   );
 
   saveTodos();
@@ -172,7 +192,21 @@ function saveTodos() {
 
 function loadTodos() {
   const savedTodos = localStorage.getItem(STORAGE_KEY);
-  return savedTodos ? JSON.parse(savedTodos) : [];
+  if (!savedTodos) return [];
+
+  return JSON.parse(savedTodos).map((todo) => ({
+    id: todo.id,
+    text: todo.text,
+    completed: todo.completed,
+    dueDate: normalizeDueDate(todo.dueDate)
+  }));
+}
+
+function normalizeDueDate(value) {
+  const trimmedValue = String(value || "").trim();
+  if (!trimmedValue) return "";
+
+  return /^\d{4}-\d{2}-\d{2}$/.test(trimmedValue) ? trimmedValue : "";
 }
 
 function escapeHtml(text) {
