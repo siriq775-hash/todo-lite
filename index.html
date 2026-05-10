@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Todo Lite</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="app-header">
+      <h1>Todo Lite</h1>
+      <p>一个简单的待办事项应用</p>
+    </header>
+
+    <form id="todo-form" class="todo-form">
+      <input
+        id="todo-input"
+        type="text"
+        placeholder="请输入待办事项"
+        autocomplete="off"
+      />
+      <button type="submit">添加</button>
+    </form>
+
+    <section class="toolbar">
+      <div class="filters" id="filters">
+        <button type="button" class="filter-btn active" data-filter="all">全部</button>
+        <button type="button" class="filter-btn" data-filter="active">进行中</button>
+        <button type="button" class="filter-btn" data-filter="completed">已完成</button>
+      </div>
+      <p id="todo-stats" class="stats">共 0 项，已完成 0 项</p>
+    </section>
+
+    <ul id="todo-list" class="todo-list"></ul>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

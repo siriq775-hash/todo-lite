@@ -1,0 +1,167 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f7fb;
+  color: #222;
+}
+
+.app {
+  width: min(720px, 92%);
+  margin: 40px auto;
+  background: #fff;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.app-header h1 {
+  margin: 0 0 8px;
+  font-size: 32px;
+}
+
+.app-header p {
+  margin: 0;
+  color: #666;
+}
+
+.todo-form {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.todo-form input {
+  flex: 1;
+  padding: 12px 14px;
+  border: 1px solid #d0d7e2;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.todo-form button,
+.filter-btn,
+.action-btn {
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.todo-form button {
+  padding: 12px 18px;
+  background: #2563eb;
+  color: #fff;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.filters {
+  display: flex;
+  gap: 8px;
+}
+
+.filter-btn {
+  padding: 8px 14px;
+  background: #e8eefc;
+  color: #1d4ed8;
+}
+
+.filter-btn.active {
+  background: #2563eb;
+  color: #fff;
+}
+
+.stats {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.todo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.todo-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.todo-text {
+  word-break: break-word;
+}
+
+.todo-text.completed {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.todo-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.action-btn {
+  padding: 8px 12px;
+}
+
+.edit-btn {
+  background: #facc15;
+  color: #222;
+}
+
+.delete-btn {
+  background: #ef4444;
+  color: #fff;
+}
+
+.empty {
+  text-align: center;
+  color: #888;
+  padding: 20px 0;
+}
+
+@media (max-width: 600px) {
+  .todo-form {
+    flex-direction: column;
+  }
+
+  .todo-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .todo-actions {
+    justify-content: flex-end;
+  }
+}
