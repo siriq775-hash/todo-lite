@@ -137,7 +137,7 @@ function getFilteredTodos() {
     );
   }
 
-  return filteredTodos;
+  return [...filteredTodos].sort(compareTodosByDueDate);
 }
 
 function toggleTodo(id) {
@@ -227,6 +227,25 @@ function getTodayDateString() {
 
 function isOverdue(todo) {
   return Boolean(todo.dueDate && !todo.completed && todo.dueDate < getTodayDateString());
+}
+
+function compareTodosByDueDate(a, b) {
+  if (a.completed !== b.completed) {
+    return Number(a.completed) - Number(b.completed);
+  }
+
+  if (!a.dueDate && !b.dueDate) {
+    return b.id - a.id;
+  }
+
+  if (!a.dueDate) return 1;
+  if (!b.dueDate) return -1;
+
+  if (a.dueDate !== b.dueDate) {
+    return a.dueDate.localeCompare(b.dueDate);
+  }
+
+  return b.id - a.id;
 }
 
 function escapeHtml(text) {
