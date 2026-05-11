@@ -4,39 +4,54 @@
 
 body {
   margin: 0;
+  padding: 24px 0;
   font-family: Arial, sans-serif;
   background: #f5f7fb;
   color: #222;
 }
 
 .app {
-  width: min(720px, 92%);
-  margin: 40px auto;
+  width: min(1100px, calc(100% - 32px));
+  margin: 0 auto;
   background: #fff;
-  padding: 24px;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  padding: 32px;
+  border-radius: 20px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
 }
 
 .app-header {
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .app-header h1 {
   margin: 0 0 8px;
-  font-size: 32px;
+  font-size: 36px;
 }
 
 .app-header p {
   margin: 0;
   color: #666;
+  font-size: 16px;
 }
 
 .todo-form {
   display: flex;
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: 16px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-label {
+  font-size: 13px;
+  color: #4b5563;
 }
 
 #todo-input,
@@ -50,20 +65,22 @@ body {
 }
 
 #todo-input {
-  flex: 1;
+  flex: 1 1 280px;
+  min-width: 280px;
+  align-self: stretch;
 }
 
 .due-date-input {
-  width: 170px;
+  width: 190px;
 }
 
 .priority-input {
-  width: 96px;
+  width: 112px;
   background: #fff;
 }
 
 .category-input {
-  width: 108px;
+  width: 128px;
   background: #fff;
 }
 
@@ -78,9 +95,11 @@ body {
 }
 
 .todo-form button {
-  padding: 12px 18px;
+  height: 48px;
+  padding: 0 20px;
   background: #2563eb;
   color: #fff;
+  white-space: nowrap;
 }
 
 .toolbar {
@@ -254,8 +273,41 @@ body {
 }
 
 @media (max-width: 600px) {
+  body {
+    padding: 16px 0;
+  }
+
+  .app {
+    width: min(100% - 16px, 100%);
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .app-header h1 {
+    font-size: 30px;
+  }
+
+  .app-header p {
+    font-size: 14px;
+  }
+
   .todo-form {
     flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .field-group {
+    width: 100%;
+  }
+
+  #todo-input,
+  .due-date-input,
+  .priority-input,
+  .category-input,
+  .todo-form button {
+    width: 100%;
+    min-width: 0;
   }
 
   .todo-item {
