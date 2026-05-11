@@ -81,12 +81,12 @@ todoList.addEventListener("click", (event) => {
     return;
   }
 
-  if (event.target.matches(".edit-btn")) {
+  if (event.target.closest(".edit-btn")) {
     editTodo(id);
     return;
   }
 
-  if (event.target.matches(".delete-btn")) {
+  if (event.target.closest(".delete-btn")) {
     deleteTodo(id);
   }
 });
@@ -118,8 +118,21 @@ function render() {
           </div>
         </div>
         <div class="todo-actions">
-          <button class="action-btn edit-btn" type="button">编辑</button>
-          <button class="action-btn delete-btn" type="button">删除</button>
+          <button class="action-btn edit-btn" type="button">
+            <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 20h4l10-10-4-4L4 16v4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M13 7l4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span>编辑</span>
+          </button>
+          <button class="action-btn delete-btn" type="button">
+            <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 7h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+              <path d="M9 7V5h6v2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M8 7l1 12h6l1-12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span>删除</span>
+          </button>
         </div>
       `;
 
