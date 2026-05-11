@@ -226,6 +226,12 @@ function editTodo(id) {
 }
 
 function deleteTodo(id) {
+  const target = todos.find((todo) => todo.id === id);
+  if (!target) return;
+
+  const confirmed = window.confirm(`确定要删除“${target.text}”吗？`);
+  if (!confirmed) return;
+
   todos = todos.filter((todo) => todo.id !== id);
   saveTodos();
   render();
