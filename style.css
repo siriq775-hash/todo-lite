@@ -41,7 +41,8 @@ body {
 
 #todo-input,
 .due-date-input,
-.priority-input {
+.priority-input,
+.category-input {
   padding: 12px 14px;
   border: 1px solid #d0d7e2;
   border-radius: 10px;
@@ -58,6 +59,11 @@ body {
 
 .priority-input {
   width: 96px;
+  background: #fff;
+}
+
+.category-input {
+  width: 108px;
   background: #fff;
 }
 
@@ -178,12 +184,28 @@ body {
   color: #6b7280;
 }
 
+.category-badge,
 .priority-badge {
   width: fit-content;
   padding: 2px 8px;
   border-radius: 999px;
   font-size: 12px;
   font-weight: 600;
+}
+
+.category-work {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.category-daily {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.category-leisure {
+  background: #f3e8ff;
+  color: #7e22ce;
 }
 
 .priority-high {

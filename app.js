@@ -4,6 +4,7 @@ const todoForm = document.getElementById("todo-form");
 const todoInput = document.getElementById("todo-input");
 const dueDateInput = document.getElementById("due-date-input");
 const priorityInput = document.getElementById("priority-input");
+const categoryInput = document.getElementById("category-input");
 const todoList = document.getElementById("todo-list");
 const todoStats = document.getElementById("todo-stats");
 const filters = document.getElementById("filters");
@@ -24,6 +25,7 @@ todoForm.addEventListener("submit", (event) => {
   const text = todoInput.value.trim();
   const dueDate = normalizeDueDate(dueDateInput.value);
   const priority = normalizePriority(priorityInput.value);
+  const category = normalizeCategory(categoryInput.value);
   if (!text) return;
 
   if (dueDate && dueDate < getTodayDateString()) {
@@ -36,7 +38,8 @@ todoForm.addEventListener("submit", (event) => {
     text,
     completed: false,
     dueDate,
-    priority
+    priority,
+    category
   });
 
   saveTodos();
@@ -106,6 +109,7 @@ function render() {
           <div class="todo-content">
             <span class="todo-text ${todo.completed ? "completed" : ""}">${escapeHtml(todo.text)}</span>
             ${todo.dueDate ? `<span class="todo-due-date">截止：${escapeHtml(todo.dueDate)}</span>` : ""}
+            <span class="category-badge category-${todo.category}">${escapeHtml(getCategoryLabel(todo.category))}</span>
             <span class="priority-badge priority-${todo.priority}">${escapeHtml(getPriorityLabel(todo.priority))}</span>
           </div>
         </div>
@@ -229,7 +233,8 @@ function loadTodos() {
     text: todo.text,
     completed: todo.completed,
     dueDate: normalizeDueDate(todo.dueDate),
-    priority: normalizePriority(todo.priority)
+    priority: normalizePriority(todo.priority),
+    category: normalizeCategory(todo.category)
   }));
 }
 
@@ -243,6 +248,11 @@ function normalizeDueDate(value) {
 function normalizePriority(value) {
   const trimmedValue = String(value || "").trim().toLowerCase();
   return ["high", "medium", "low"].includes(trimmedValue) ? trimmedValue : "medium";
+}
+
+function normalizeCategory(value) {
+  const trimmedValue = String(value || "").trim().toLowerCase();
+  return ["work", "daily", "leisure"].includes(trimmedValue) ? trimmedValue : "daily";
 }
 
 function getTodayDateString() {
@@ -287,6 +297,12 @@ function getPriorityLabel(priority) {
   if (priority === "high") return "高优先级";
   if (priority === "low") return "低优先级";
   return "中优先级";
+}
+
+function getCategoryLabel(category) {
+  if (category === "work") return "工作";
+  if (category === "leisure") return "休闲";
+  return "日常";
 }
 
 function escapeHtml(text) {
