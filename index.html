@@ -20,22 +20,31 @@
         placeholder="请输入待办事项"
         autocomplete="off"
       />
-      <input
-        id="due-date-input"
-        class="due-date-input"
-        type="date"
-        aria-label="截止日期"
-      />
-      <select id="priority-input" class="priority-input" aria-label="优先级">
-        <option value="high">高</option>
-        <option value="medium" selected>中</option>
-        <option value="low">低</option>
-      </select>
-      <select id="category-input" class="category-input" aria-label="类别">
-        <option value="work">工作</option>
-        <option value="daily" selected>日常</option>
-        <option value="leisure">休闲</option>
-      </select>
+      <label class="field-group">
+        <span class="field-label">截至日期</span>
+        <input
+          id="due-date-input"
+          class="due-date-input"
+          type="date"
+          aria-label="截止日期"
+        />
+      </label>
+      <label class="field-group">
+        <span class="field-label">优先级</span>
+        <select id="priority-input" class="priority-input" aria-label="优先级">
+          <option value="high">高</option>
+          <option value="medium" selected>中</option>
+          <option value="low">低</option>
+        </select>
+      </label>
+      <label class="field-group">
+        <span class="field-label">类别</span>
+        <select id="category-input" class="category-input" aria-label="类别">
+          <option value="work">工作</option>
+          <option value="daily" selected>日常</option>
+          <option value="leisure">休闲</option>
+        </select>
+      </label>
       <button type="submit">添加</button>
     </form>
 
