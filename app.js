@@ -107,10 +107,14 @@ function render() {
         <div class="todo-left">
           <input class="toggle-checkbox" type="checkbox" ${todo.completed ? "checked" : ""} />
           <div class="todo-content">
-            <span class="todo-text ${todo.completed ? "completed" : ""}">${escapeHtml(todo.text)}</span>
+            <div class="todo-main-row">
+              <span class="todo-text ${todo.completed ? "completed" : ""}">${escapeHtml(todo.text)}</span>
+              <div class="todo-meta">
+                <span class="category-badge category-${todo.category}">${escapeHtml(getCategoryLabel(todo.category))}</span>
+                <span class="priority-badge priority-${todo.priority}">${escapeHtml(getPriorityLabel(todo.priority))}</span>
+              </div>
+            </div>
             ${todo.dueDate ? `<span class="todo-due-date">截止：${escapeHtml(todo.dueDate)}</span>` : ""}
-            <span class="category-badge category-${todo.category}">${escapeHtml(getCategoryLabel(todo.category))}</span>
-            <span class="priority-badge priority-${todo.priority}">${escapeHtml(getPriorityLabel(todo.priority))}</span>
           </div>
         </div>
         <div class="todo-actions">
