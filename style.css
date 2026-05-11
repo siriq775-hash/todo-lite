@@ -146,10 +146,24 @@ body {
   background: var(--brand);
   color: #fff;
   white-space: nowrap;
+  box-shadow: 0 10px 22px rgba(47, 111, 237, 0.18);
+  transition: background-color 160ms ease, box-shadow 160ms ease, transform 120ms ease;
 }
 
 .todo-form button:hover {
   background: var(--brand-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(47, 111, 237, 0.22);
+}
+
+.todo-form button:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 6px 14px rgba(47, 111, 237, 0.16);
+}
+
+.todo-form button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--focus-ring), 0 14px 28px rgba(47, 111, 237, 0.18);
 }
 
 .toolbar {
